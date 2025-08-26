@@ -1,1 +1,0 @@
-{"name":"draggable_column","version":"0.0.8","scripts":{"build":"weweb build","serve":"weweb serve"},"devDependencies":{},"dependencies":{"vuedraggable":"^4.1.0"}}
