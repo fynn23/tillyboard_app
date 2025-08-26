@@ -1,0 +1,73 @@
+name: Promote WeWeb export → deploy
+
+on:
+  push:
+    branches: [ export ]   # <<— HIER steht dein WeWeb-Export-Branch
+
+permissions:
+  contents: write
+
+env:
+  # Toggle: SPA-Fallback (Rewrite auf /index.html) aktivieren?
+  SPA_FALLBACK: "true"
+  # Toggle: Eine 404.html erzeugen, falls keine vorhanden ist?
+  CREATE_404: "false"
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout export branch
+        uses: actions/checkout@v4
+        with:
+          ref: export                 # <<— Export-Branch
+          fetch-depth: 1
+
+      - name: Prepare clean output directory
+        run: |
+          rm -rf out
+          mkdir -p out
+          shopt -s dotglob
+          cp -R * out/ || true
+
+      - name: Add vercel.json (SPA rewrite) if enabled
+        if: env.SPA_FALLBACK == 'true'
+        run: |
+          cat > out/vercel.json <<'JSON'
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/((?!.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|css|js|map|txt|xml|json|mp4|webm|wav|mp3|woff|woff2|ttf|otf)$).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+JSON
+
+      - name: Add minimal 404.html if requested and missing
+        if: env.CREATE_404 == 'true'
+        run: |
+          if [ ! -f out/404.html ]; then
+            cat > out/404.html <<'HTML'
+<!doctype html><html lang="de"><meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>404 – Seite nicht gefunden</title>
+<style>body{margin:0;font-family:system-ui;display:grid;place-items:center;min-height:100vh}</style>
+<body><main><h1>404 – Seite nicht gefunden</h1><p><a href="/">Zur Startseite</a></p></main></body></html>
+HTML
+          fi
+
+      - name: Init new repo from out/ and push to deploy branch
+        run: |
+          cd out
+          git init
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Promote export → deploy ($(date -u +'%Y-%m-%dT%H:%M:%SZ'))"
+          # Force-push reinen Arbeitsbaum in den deploy-Branch
+          git branch -M deploy
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push -f origin deploy
