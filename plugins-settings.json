@@ -1,0 +1,39 @@
+{
+    "69d4a5bb-09a3-4f3d-a94e-667c21c057eb": {
+        "id": "c1f58608-ac67-4aca-b529-8e0648605ebc",
+        "name": "NPM",
+        "designId": "bb46d291-a9a5-4c1e-b599-d4950d3d7c31",
+        "pluginId": "69d4a5bb-09a3-4f3d-a94e-667c21c057eb",
+        "publicData": {
+            "packages": [
+                {
+                    "link": "http://devongovett.github.com/pdfkit/",
+                    "name": "pdf.js",
+                    "version": "0.1.0",
+                    "instanceName": ""
+                }
+            ]
+        }
+    },
+    "f9ef41c3-1c53-4857-855b-f2f6a40b7186": {
+        "id": "e5b50bc0-ecbc-4324-b466-c25d224fdaf7",
+        "name": "Supabase",
+        "designId": "bb46d291-a9a5-4c1e-b599-d4950d3d7c31",
+        "pluginId": "f9ef41c3-1c53-4857-855b-f2f6a40b7186",
+        "publicData": {
+            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1yYWtrandubnF1bHBtYnpxdGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjUyODY2NzcsImV4cCI6MjA0MDg2MjY3N30.CwbDOp6eN_nHFdw9hBwWWAabnx_vSIiA8VHtHfg8PdQ",
+            "projectUrl": "https://mrakkjwnnqulpmbzqtie.supabase.co",
+            "realtimeTables": {}
+        }
+    },
+    "1fa0dd68-5069-436c-9a7d-3b54c340f1fa": {
+        "id": "e036a2dd-8a30-483b-9929-1e3115259862",
+        "name": "Supabase Auth",
+        "designId": "bb46d291-a9a5-4c1e-b599-d4950d3d7c31",
+        "pluginId": "1fa0dd68-5069-436c-9a7d-3b54c340f1fa",
+        "publicData": {
+            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1yYWtrandubnF1bHBtYnpxdGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjUyODY2NzcsImV4cCI6MjA0MDg2MjY3N30.CwbDOp6eN_nHFdw9hBwWWAabnx_vSIiA8VHtHfg8PdQ",
+            "projectUrl": "https://mrakkjwnnqulpmbzqtie.supabase.co"
+        }
+    }
+}
