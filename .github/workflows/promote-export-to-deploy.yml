@@ -1,40 +1,29 @@
-name: Promote WeWeb export → deploy
+name: Ensure vercel.json on staging
 
 on:
   push:
-    branches: [ export ]   # <<— HIER steht dein WeWeb-Export-Branch
+    branches: [ staging ]
 
 permissions:
   contents: write
 
-env:
-  # Toggle: SPA-Fallback (Rewrite auf /index.html) aktivieren?
-  SPA_FALLBACK: "true"
-  # Toggle: Eine 404.html erzeugen, falls keine vorhanden ist?
-  CREATE_404: "false"
-
 jobs:
-  promote:
+  ensure-config:
+    if: github.actor != 'github-actions[bot]'   # verhindert Endlosschleife
     runs-on: ubuntu-latest
-
+    env:
+      # Falls Vercel ein Unterordner als Root nutzt, hier z. B. "site" eintragen.
+      VERCEL_ROOT: ""   # leer = Repo-Root
     steps:
-      - name: Checkout export branch
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: export                 # <<— Export-Branch
           fetch-depth: 1
 
-      - name: Prepare clean output directory
+      - name: Ensure vercel.json exists with SPA fallback
         run: |
-          rm -rf out
-          mkdir -p out
-          shopt -s dotglob
-          cp -R * out/ || true
-
-      - name: Add vercel.json (SPA rewrite) if enabled
-        if: env.SPA_FALLBACK == 'true'
-        run: |
-          cat > out/vercel.json <<'JSON'
+          mkdir -p "${VERCEL_ROOT}"
+          cat > "${VERCEL_ROOT}/vercel.json" <<'JSON'
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
@@ -46,28 +35,14 @@ jobs:
 }
 JSON
 
-      - name: Add minimal 404.html if requested and missing
-        if: env.CREATE_404 == 'true'
+      - name: Commit changes if needed
         run: |
-          if [ ! -f out/404.html ]; then
-            cat > out/404.html <<'HTML'
-<!doctype html><html lang="de"><meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>404 – Seite nicht gefunden</title>
-<style>body{margin:0;font-family:system-ui;display:grid;place-items:center;min-height:100vh}</style>
-<body><main><h1>404 – Seite nicht gefunden</h1><p><a href="/">Zur Startseite</a></p></main></body></html>
-HTML
+          if ! git diff --quiet; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore(ci): ensure vercel.json on staging [skip ci]"
+            git push
+          else
+            echo "No changes."
           fi
-
-      - name: Init new repo from out/ and push to deploy branch
-        run: |
-          cd out
-          git init
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Promote export → deploy ($(date -u +'%Y-%m-%dT%H:%M:%SZ'))"
-          # Force-push reinen Arbeitsbaum in den deploy-Branch
-          git branch -M deploy
-          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push -f origin deploy
