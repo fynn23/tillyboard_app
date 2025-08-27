@@ -1,15 +1,17 @@
-name: Create A File
+name: Create foo.bar
 
 on:
   push:
     branches:
-      - master   # ggf. auf 'main' ändern
+      - main
+      - master
+      - staging   # nimm raus, was du nicht brauchst
 
 permissions:
-  contents: write   # wichtig für den Push
+  contents: write
 
 jobs:
-  createFile:
+  create-file:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,23 +19,34 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Ensure target directory
-        run: mkdir -p src
+      - name: Create file (visible in workspace)
+        run: |
+          mkdir -p src
+          printf "Hello\nWorld\n" > src/foo.bar
+          echo "=== ls -la src ==="
+          ls -la src
 
-      - name: Create file
-        uses: 1arp/create-a-file-action@0.4.5
-        with:
-          path: 'src'
-          isAbsolutePath: false
-          file: 'foo.bar'
-          content: |
-            Hello
-            World
+      - name: Commit & push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Commit & push changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: 'src/foo.bar'
-          message: 'chore: add foo.bar via workflow'
-          default_author: github_actions
-          push: true
+          echo "=== git status BEFORE add ==="
+          git status --porcelain
+
+          git add src/foo.bar
+
+          echo "=== git status AFTER add ==="
+          git status --porcelain
+
+          # Commit nur, wenn es wirklich Änderungen gibt
+          git diff --cached --quiet && echo "No changes to commit" || git commit -m "chore: add src/foo.bar via workflow"
+
+          # Push auf denselben Branch, auf dem der Workflow läuft
+          CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+          echo "Pushing to $CURRENT_BRANCH"
+          git push origin "$CURRENT_BRANCH"
+
+      - name: Show last commit
+        run: |
+          git --no-pager log -1 --stat
