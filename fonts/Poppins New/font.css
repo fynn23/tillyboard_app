@@ -1,0 +1,32 @@
+
+@font-face {
+    font-family: 'Poppins New';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url(28c6775b-ff97-4551-aa9f-f0ac02fc2d06.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Poppins New';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(15f8d02d-ff83-464a-8f3f-5dee935a7b0f.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Poppins New';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(6387d9ac-c8a5-40ae-a5a0-f4a9f48a67a2.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Poppins New';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url(118983e1-c704-4683-80f5-36149d6c46ee.ttf) format('truetype');
+}

@@ -1,1 +1,0 @@
-import{_ as o,y as t,q as s,o as c}from"./main-CeMEyFvX.js";const a={props:{content:{type:Object,required:!0}}};function n(_,r,p,d,i,u){const e=t("wwLayout");return c(),s(e,{path:"wwObjects",class:"section-base"})}const w=o(a,[["render",n],["__scopeId","data-v-8a232652"]]);export{w as s};
