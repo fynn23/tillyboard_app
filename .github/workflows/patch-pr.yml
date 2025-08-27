@@ -21,7 +21,8 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Ensure vercel.json (SPA fallback to /index.html)
+      - name: Ensure vercel.json (SPA fallback)
+        shell: bash
         run: |
           cat > vercel.json <<'JSON'
 {
@@ -32,25 +33,23 @@ jobs:
 }
 JSON
 
-      - name: Ensure 404.html (bevorzugt in /public, sonst neben index.html)
+      - name: Ensure 404.html (prefer /public, else root)
         shell: bash
         run: |
           set -euo pipefail
-          TARGET_DIR="public"
-          if [ -f "public/index.html" ]; then
-            TARGET_DIR="public"
-          elif [ -f "index.html" ]; then
-            TARGET_DIR="."
+          if [ -f public/index.html ]; then
+            DIR=public
+          elif [ -f index.html ]; then
+            DIR=.
           else
-            # Falls WeWeb (noch) keine index.html mitliefert: lege minimalen 404 in /public an
-            TARGET_DIR="public"
+            DIR=public
             mkdir -p public
           fi
 
-          if [ -f "$TARGET_DIR/index.html" ]; then
-            cp "$TARGET_DIR/index.html" "$TARGET_DIR/404.html"
+          if [ -f "$DIR/index.html" ]; then
+            cp "$DIR/index.html" "$DIR/404.html"
           else
-            cat > "$TARGET_DIR/404.html" <<'HTML'
+            cat > "$DIR/404.html" <<'HTML'
 <!doctype html>
 <meta charset="utf-8">
 <meta http-equiv="refresh" content="0; url=/" />
@@ -60,6 +59,7 @@ HTML
           fi
 
       - name: Commit & push patched files into PR branch
+        shell: bash
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
