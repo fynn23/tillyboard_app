@@ -1,52 +1,63 @@
-name: Create foo.bar
+name: Ensure src/foo.bar exists
 
 on:
   push:
     branches:
       - main
       - master
-      - staging   # nimm raus, was du nicht brauchst
+      - staging   # ggf. entfernen, wenn unnötig
 
 permissions:
   contents: write
 
 jobs:
-  create-file:
+  ensure-file:
+    # verhindert Endlosschleifen bei Bot-Commits
+    if: ${{ github.actor != 'github-actions[bot]' }}
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Create file (visible in workspace)
+      - name: Ensure directory and file content
+        env:
+          TARGET_FILE: src/foo.bar
         run: |
+          set -e
           mkdir -p src
-          printf "Hello\nWorld\n" > src/foo.bar
+          NEW_CONTENT=$'Hello\nWorld\n'
+
+          # Datei erzeugen, falls nicht vorhanden
+          if [ ! -f "$TARGET_FILE" ]; then
+            printf "%s" "$NEW_CONTENT" > "$TARGET_FILE"
+          else
+            # nur überschreiben, wenn Inhalt sich unterscheidet
+            if ! diff -q <(printf "%s" "$NEW_CONTENT") "$TARGET_FILE" >/dev/null 2>&1; then
+              printf "%s" "$NEW_CONTENT" > "$TARGET_FILE"
+            fi
+          fi
+
           echo "=== ls -la src ==="
           ls -la src
 
-      - name: Commit & push
+      - name: Commit & push if changed
+        env:
+          TARGET_FILE: src/foo.bar
+          BRANCH_NAME: ${{ github.ref_name }}
         run: |
+          set -e
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          echo "=== git status BEFORE add ==="
-          git status --porcelain
-
-          git add src/foo.bar
-
-          echo "=== git status AFTER add ==="
-          git status --porcelain
-
-          # Commit nur, wenn es wirklich Änderungen gibt
-          git diff --cached --quiet && echo "No changes to commit" || git commit -m "chore: add src/foo.bar via workflow"
-
-          # Push auf denselben Branch, auf dem der Workflow läuft
-          CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
-          echo "Pushing to $CURRENT_BRANCH"
-          git push origin "$CURRENT_BRANCH"
-
-      - name: Show last commit
-        run: |
-          git --no-pager log -1 --stat
+          # nur committen, wenn es Änderungen gibt
+          if ! git diff --quiet -- "$TARGET_FILE"; then
+            git add "$TARGET_FILE"
+            git commit -m "chore: ensure $TARGET_FILE exists [skip ci]"
+            git push origin "$BRANCH_NAME"
+            echo "Committed and pushed changes to $BRANCH_NAME."
+          else
+            echo "No changes – nothing to commit."
+          fi
