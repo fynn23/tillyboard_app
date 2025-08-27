@@ -85,27 +85,28 @@
       z-index: 0;
     }
 
-    p {
+    .message {
       position: absolute;
-      bottom: 80px;
-      width: 100%;
-      margin: 0;
+      top: calc(50% + 220px);
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .message p {
+      margin: 0 0 8px;
       font-size: 22px;
       font-weight: 600;
     }
 
-    a.back {
-      position: absolute;
-      bottom: 40px;
-      width: 100%;
+    .message a {
       font-size: 16px;
       color: var(--muted);
       text-decoration: none;
     }
-    a.back:hover {
+    .message a:hover {
       text-decoration: underline;
     }
-
   </style>
 </head>
 <body>
@@ -117,8 +118,11 @@
       <img src="https://app.tillyboard.com/images/icons8-broken-bone.svg?_wwcv=3211" alt="Icon" />
     </div>
     <div class="shadow" aria-hidden="true"></div>
-    <p>Du hast dich verlaufen</p>
-    <a class="back" href="/">zurück</a>
+
+    <div class="message">
+      <p>Du hast dich verlaufen</p>
+      <a href="/">zurück</a>
+    </div>
   </div>
 </body>
 </html>
