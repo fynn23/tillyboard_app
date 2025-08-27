@@ -1,0 +1,68 @@
+name: Patch PR with vercel.json (+404)
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+    branches: [ "staging" ]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR HEAD (writeable)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Ensure vercel.json (SPA fallback to /index.html)
+        run: |
+          cat > vercel.json <<'JSON'
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+JSON
+
+      - name: Ensure 404.html (bevorzugt in /public, sonst neben index.html)
+        shell: bash
+        run: |
+          set -euo pipefail
+          TARGET_DIR="public"
+          if [ -f "public/index.html" ]; then
+            TARGET_DIR="public"
+          elif [ -f "index.html" ]; then
+            TARGET_DIR="."
+          else
+            # Falls WeWeb (noch) keine index.html mitliefert: lege minimalen 404 in /public an
+            TARGET_DIR="public"
+            mkdir -p public
+          fi
+
+          if [ -f "$TARGET_DIR/index.html" ]; then
+            cp "$TARGET_DIR/index.html" "$TARGET_DIR/404.html"
+          else
+            cat > "$TARGET_DIR/404.html" <<'HTML'
+<!doctype html>
+<meta charset="utf-8">
+<meta http-equiv="refresh" content="0; url=/" />
+<meta name="robots" content="noindex">
+<title>404</title>
+HTML
+          fi
+
+      - name: Commit & push patched files into PR branch
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add vercel.json public/404.html 404.html || true
+          git commit -m "chore: add vercel.json (+404)" || exit 0
+          git push
