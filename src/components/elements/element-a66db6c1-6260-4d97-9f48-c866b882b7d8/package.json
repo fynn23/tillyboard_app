@@ -1,1 +1,0 @@
-{"name":"interactive-image-canvas","version":"1.0.3","scripts":{"build":"weweb build","serve":"weweb serve"},"dependencies":{"uuid":"^9.0.1"},"devDependencies":{}}
