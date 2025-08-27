@@ -3,18 +3,16 @@ name: Ensure vercel.json on staging
 on:
   push:
     branches:
-      - staging   # << läuft nur bei Push auf staging
+      - staging  # läuft nur bei Push auf staging
 
 permissions:
   contents: write
 
 jobs:
   ensure-config:
-    # verhindert Endlosschleife, wenn der Bot selbst committed
-    if: ${{ github.actor != 'github-actions[bot]' }}
+    if: ${{ github.actor != 'github-actions[bot]' }} # verhindert Endlosschleife
     runs-on: ubuntu-latest
 
-    # falls Vercel ein Root Directory nutzt (z. B. "site"), hier anpassen
     env:
       VERCEL_ROOT: ""
 
@@ -29,17 +27,16 @@ jobs:
         run: |
           ROOT="${VERCEL_ROOT:-.}"
           mkdir -p "$ROOT"
-          cat > "$ROOT/vercel.json" <<'JSON'
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
-    {
-      "source": "/((?!.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|css|js|map|txt|xml|json|mp4|webm|wav|mp3|woff|woff2|ttf|otf)$).*)",
-      "destination": "/index.html"
-    }
-  ]
-}
-JSON
+          printf '%s\n' \
+          '{' \
+          '  "$schema": "https://openapi.vercel.sh/vercel.json",' \
+          '  "rewrites": [' \
+          '    {' \
+          '      "source": "/((?!.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|css|js|map|txt|xml|json|mp4|webm|wav|mp3|woff|woff2|ttf|otf)$).*)",' \
+          '      "destination": "/index.html"' \
+          '    }' \
+          '  ]' \
+          '}' > "$ROOT/vercel.json"
 
       - name: Commit changes if needed
         shell: bash
