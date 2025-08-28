@@ -35,7 +35,6 @@ export default {
     },
     emits: ['update:content:effect', 'trigger-event', 'add-state', 'remove-state'],
     setup(props, { emit }) {
-
         const { value: variableValue, setValue } = wwLib.wwVariable.useComponentVariable({
             uid: props.uid,
             name: 'value',

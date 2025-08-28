@@ -24,14 +24,13 @@ export default {
 
 <style scoped lang="scss">
 .ww-cell-renderer {
-    height: 100%;
-    width: 100%;
     display: flex;
     flex-direction: column;
-    line-height: normal;
-}
-:deep(.ww-cell-renderer-flexbox) {
+    width: 100%;
     height: 100%;
-    flex: 1;
+    line-height: normal;
+    :deep(.ww-cell-renderer-flexbox) {
+        flex: 1;
+    }
 }
 </style>

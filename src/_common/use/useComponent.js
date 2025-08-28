@@ -243,12 +243,7 @@ export function useComponentTriggerEvent(
 
         for (const eventName of allEvents) {
             listeners[`on${eventName[0].toUpperCase()}${eventName.substr(1)}`] = event => {
-                if (eventName === 'contextmenu') {
-                    // Allow native browser menu when Ctrl + Alt + Right Click (Windows/Linux) or Cmd + Option + Right Click (Mac)
-                    if (!((event.ctrlKey && event.altKey) || (event.metaKey && event.altKey))) {
-                        event.preventDefault();
-                    }
-                }
+                if (eventName === 'contextmenu') event.preventDefault();
                 // Trigger define on the library component instance level
                 if (triggerParentEvent) {
                     triggerParentEvent(eventName, event);

@@ -35,17 +35,9 @@ if ('serviceWorker' in navigator) {
             }
         });
     } else {
-        const baseTag = window.wwg_designInfo?.baseTag;
-        let href = baseTag?.href || null;
-        if (href) {
-            if (!href.startsWith('/')) href = `/${href}`;
-            if (!href.endsWith('/')) href = `${href}/`;
-        }
-        navigator.serviceWorker
-            .register(`${href ?? '/'}serviceworker.js?_wwcv=${window.wwg_cacheVersion}`)
-            .catch(error => {
-                console.error('Service worker registration failed:', error);
-            });
+        navigator.serviceWorker.register(`/serviceworker.js?_wwcv=${window.wwg_cacheVersion}`).catch(error => {
+            console.error('Service worker registration failed:', error);
+        });
     }
 }
 /* wwFront:end */

@@ -98,7 +98,6 @@ export default {
     },
     emits: ['trigger-event', 'add-state', 'remove-state'],
     setup(props, { emit }) {
-
         const isEditing = computed(() => {
             // eslint-disable-next-line no-unreachable
             return false;

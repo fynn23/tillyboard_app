@@ -44,7 +44,6 @@ export const TEXT_CONFIGURATION = {
             responsive: true,
             states: true,
             classes: true,
-            isStyle: true,
         },
         '_ww-text_fontSize': {
             label: 'Size',
@@ -64,7 +63,6 @@ export const TEXT_CONFIGURATION = {
             bindable: true,
             hidden: (content, _, boundProps) => content['_ww-text_font'] || boundProps['_ww-text_font'],
             bindingValidation: { markdown: 'font-size', type: 'string', cssSupports: 'font-size' },
-            isStyle: true,
         },
         '_ww-text_fontFamily': {
             label: 'Font family',
@@ -76,7 +74,6 @@ export const TEXT_CONFIGURATION = {
             bindable: true,
             hidden: (content, _, boundProps) => content['_ww-text_font'] || boundProps['_ww-text_font'],
             bindingValidation: { markdown: 'font-family', type: 'string', cssSupports: 'font-family' },
-            isStyle: true,
         },
         '_ww-text_fontWeight': {
             label: 'Font weight',
@@ -102,7 +99,6 @@ export const TEXT_CONFIGURATION = {
             bindable: true,
             hidden: (content, _, boundProps) => content['_ww-text_font'] || boundProps['_ww-text_font'],
             bindingValidation: { markdown: 'font-weight', type: 'string', cssSupports: 'font-weight' },
-            isStyle: true,
         },
         '_ww-text_fontStyle': {
             label: 'Font Style',
@@ -120,7 +116,6 @@ export const TEXT_CONFIGURATION = {
             classes: true,
             hidden: (content, _, boundProps) => content['_ww-text_font'] || boundProps['_ww-text_font'],
             bindingValidation: { markdown: 'font-style', type: 'string', cssSupports: 'font-style' },
-            isStyle: true,
         },
         '_ww-text_lineHeight': {
             label: 'Line height',
@@ -143,7 +138,6 @@ export const TEXT_CONFIGURATION = {
             bindable: true,
             hidden: (content, _, boundProps) => content['_ww-text_font'] || boundProps['_ww-text_font'],
             bindingValidation: { markdown: 'line-height', type: 'string', cssSupports: 'line-height' },
-            isStyle: true,
         },
         '_ww-text_textAlign': {
             label: 'Alignment',
@@ -161,7 +155,6 @@ export const TEXT_CONFIGURATION = {
             classes: true,
             bindable: true,
             bindingValidation: { markdown: 'text-align', type: 'string', cssSupports: 'text-align' },
-            isStyle: true,
         },
         '_ww-text_color': {
             label: 'Text color',
@@ -173,7 +166,6 @@ export const TEXT_CONFIGURATION = {
             responsive: true,
             states: true,
             classes: true,
-            isStyle: true,
         },
         '_ww-text_textDecoration': {
             label: 'Decoration',
@@ -192,7 +184,6 @@ export const TEXT_CONFIGURATION = {
             states: true,
             classes: true,
             bindingValidation: { markdown: 'text-decoration', type: 'string', cssSupports: 'text-decoration' },
-            isStyle: true,
         },
         '_ww-text_textDecorationStyle': {
             label: 'Decoration style',
@@ -217,7 +208,6 @@ export const TEXT_CONFIGURATION = {
                 type: 'string',
                 cssSupports: 'text-decoration-style',
             },
-            isStyle: true,
         },
         '_ww-text_textDecorationColor': {
             label: 'Decoration color',
@@ -230,7 +220,6 @@ export const TEXT_CONFIGURATION = {
             states: true,
             classes: true,
             hidden: content => content['_ww-text_textDecoration'] === 'none' || !content['_ww-text_textDecoration'],
-            isStyle: true,
         },
         '_ww-text_nowrap': {
             label: 'No-wrap',
@@ -241,7 +230,6 @@ export const TEXT_CONFIGURATION = {
             states: true,
             classes: true,
             bindingValidation: { type: 'boolean', markdown: 'no-wrap' },
-            isStyle: true,
         },
         '_ww-text_ellipsis': {
             hidden: content => !content['_ww-text_nowrap'],
@@ -253,7 +241,6 @@ export const TEXT_CONFIGURATION = {
             states: true,
             classes: true,
             bindingValidation: { type: 'boolean', markdown: 'ellipsis' },
-            isStyle: true,
         },
         '_ww-text_textTransform': {
             label: 'Character case',
@@ -272,7 +259,6 @@ export const TEXT_CONFIGURATION = {
             bindingValidation: { markdown: 'text-transform', type: 'string', cssSupports: 'text-transform' },
             states: true,
             classes: true,
-            isStyle: true,
         },
         '_ww-text_textShadow': {
             label: 'Text Shadows',
@@ -284,7 +270,6 @@ export const TEXT_CONFIGURATION = {
             states: true,
             classes: true,
             bindingValidation: { markdown: 'text-shadow', type: 'string', cssSupports: 'text-shadow' },
-            isStyle: true,
         },
         '_ww-text_letterSpacing': {
             label: 'Letter spacing',
@@ -303,7 +288,6 @@ export const TEXT_CONFIGURATION = {
             classes: true,
             bindable: true,
             bindingValidation: { markdown: 'letter-spacing', type: 'string', cssSupports: 'letter-spacing' },
-            isStyle: true,
         },
         '_ww-text_wordSpacing': {
             label: 'Word spacing',
@@ -318,7 +302,6 @@ export const TEXT_CONFIGURATION = {
             classes: true,
             bindable: true,
             bindingValidation: { markdown: 'word-spacing', type: 'string', cssSupports: 'word-spacing' },
-            isStyle: true,
         },
         '_ww-text_links': {
             hidden: true,

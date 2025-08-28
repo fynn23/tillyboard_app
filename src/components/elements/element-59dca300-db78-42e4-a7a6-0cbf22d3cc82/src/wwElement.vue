@@ -10,18 +10,16 @@
         v-bind="properties"
         @focus="isReallyFocused = true"
         @blur="onBlur($event)"
-        @mousedown="onMouseActivate"
-        @mouseup="onMouseDeactivate"
-        @mouseleave="onMouseDeactivate"
-        @touchstart="onTouchActivate"
-        @touchend="onTouchDeactivate"
-        @touchcancel="onTouchDeactivate"
-        @keydown.enter="onKeyActivate"
-        @keydown.space="onKeyActivate"
-        @keyup.enter="onKeyDeactivate"
-        @keyup.space="onKeyDeactivate"
-        @keydown="onKeyDown"
-        @keyup="onKeyUp"
+        @mousedown="onActivate"
+        @mouseup="onDeactivate"
+        @mouseleave="onDeactivate"
+        @touchstart="onActivate"
+        @touchend="onDeactivate"
+        @touchcancel="onDeactivate"
+        @keydown.enter="onActivate"
+        @keydown.space="onActivate"
+        @keyup.enter="onDeactivate"
+        @keyup.space="onDeactivate"
     >
         <wwElement v-if="content.hasLeftIcon && content.leftIcon" v-bind="content.leftIcon"></wwElement>
         <wwText tag="span" :text="text"></wwText>
@@ -163,37 +161,13 @@ export default {
             this.isReallyActive = true;
             // Emit the original event name
             const eventName = event.type;
-            this.$emit('trigger-event', { name: eventName, event });
+            this.$emit('trigger-event', { name: eventName });
         },
         onDeactivate(event) {
             this.isReallyActive = false;
             // Emit the original event name
             const eventName = event.type;
-            this.$emit('trigger-event', { name: eventName, event });
-        },
-        onTouchActivate() {
-            this.isReallyActive = true;
-        },
-        onTouchDeactivate() {
-            this.isReallyActive = false;
-        },
-        onMouseActivate() {
-            this.isReallyActive = true;
-        },
-        onMouseDeactivate() {
-            this.isReallyActive = false;
-        },
-        onKeyActivate() {
-            this.isReallyActive = true;
-        },
-        onKeyDeactivate() {
-            this.isReallyActive = false;
-        },
-        onKeyDown(event) {
-            this.$emit('trigger-event', { name: 'keydown', event });
-        },
-        onKeyUp(event) {
-            this.$emit('trigger-event', { name: 'keyup', event });
+            this.$emit('trigger-event', { name: eventName });
         },
     },
 };

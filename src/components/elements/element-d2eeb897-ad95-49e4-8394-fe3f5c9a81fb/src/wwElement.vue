@@ -16,8 +16,6 @@
       :suppressMovableColumns="!content.movableColumns"
       :columnHoverHighlight="content.columnHoverHighlight"
       :locale-text="localeText"
-      enableCellTextSelection
-      ensureDomOrder
       @grid-ready="onGridReady"
       @row-selected="onRowSelected"
       @selection-changed="onSelectionChanged"
@@ -364,7 +362,6 @@ export default {
         focusShadow: this.content.focusShadow?.length
           ? this.content.focusShadow
           : undefined,
-        wrapperBorderRadius: this.content.wrapperBorderRadius,
       });
     },
     isEditing() {
@@ -411,8 +408,5 @@ export default {
 <style scoped lang="scss">
 .ww-datagrid {
   position: relative;
-  :deep(.ag-cell-wrapper), :deep(.ag-cell-value) {
-    height: 100%;
-  }
 }
 </style>

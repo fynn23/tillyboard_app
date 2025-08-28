@@ -20,62 +20,6 @@ export default {
     options: {
         displayAllowedValues: ['flex', 'inline-flex'],
     },
-    actions: [
-        {
-            action: 'addTab',
-            label: { en: 'Add tab' },
-        },
-        {
-            action: 'removeTab',
-            label: { en: 'Remove tab' },
-            args: [
-                {
-                    name: 'index',
-                    type: 'number',
-                    label: { en: 'Tab index' },
-                },
-            ],
-        },
-        {
-            action: 'moveTabUp',
-            label: { en: 'Move tab up' },
-            args: [
-                {
-                    name: 'index',
-                    type: 'number',
-                    label: { en: 'Tab index' },
-                },
-            ],
-        },
-        {
-            action: 'moveTabDown',
-            label: { en: 'Move tab down' },
-            args: [
-                {
-                    name: 'index',
-                    type: 'number',
-                    label: { en: 'Tab index' },
-                },
-            ],
-        },
-        {
-            action: 'updateTabLabel',
-            label: { en: 'Update tab label' },
-            args: [
-                {
-                    name: 'payload',
-                    type: 'object',
-                    label: { en: 'Tab data' },
-                    options: {
-                        item: {
-                            index: { type: 'number', label: { en: 'Tab index' } },
-                            label: { type: 'string', label: { en: 'New label' } },
-                        },
-                    },
-                },
-            ],
-        },
-    ],
     triggerEvents: [
         { name: 'change', label: { en: 'On change' }, event: { value: '' } },
         { name: 'initValueChange', label: { en: 'On init value change' }, event: { value: '' } },
@@ -87,16 +31,11 @@ export default {
             editorOnly: true,
             options: content => ({
                 labels: content.tabsList.map((_, index) => ({
-                    label: content.tabLabels?.[index] || `Tab ${index}`,
-                    customizable: true,
+                    label: `Tab ${index}`,
                 })),
                 nbTabs: content.tabsList.length,
                 add: 'addTab',
                 remove: 'removeTab',
-                orderable: true,
-                moveUp: 'moveTabUp',
-                moveDown: 'moveTabDown',
-                updateLabel: 'updateTabLabel',
             }),
             section: 'settings',
             defaultValue: 0,
@@ -249,10 +188,6 @@ export default {
             navigator: {
                 group: 'Contents',
             },
-        },
-        tabLabels: {
-            hidden: true,
-            defaultValue: [],
         },
         value: {
             label: {

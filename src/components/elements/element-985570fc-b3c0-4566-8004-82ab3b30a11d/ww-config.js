@@ -112,31 +112,20 @@ export default {
       name: "change",
       label: { en: "On change" },
       event: { value: "2023-03-02T14:54:54.727Z" },
+      getTestEvent: "getTestEvent",
     },
     {
       name: "initValueChange",
       label: { en: "On init value change" },
       event: { value: "2023-03-02T14:54:54.727Z" },
-    },
-    {
-      name: "onFlowStep",
-      label: { en: "On flow step" },
-      event: { value: 1 },
+      getTestEvent: "getTestEvent",
     },
   ],
   actions: [
     {
-      label: "Clear",
-      action: "clearValue",
-    },
-    {
-      label: "Open Menu",
-      action: "openMenu",
-    },
-    {
-      label: "Close Menu",
-      action: "closeMenu",
-    },
+      label: 'Clear',
+      action: 'clearValue',
+    }
   ],
   properties: {
     initValueSingle: {
@@ -224,7 +213,6 @@ export default {
       type: "Title",
       section: "settings",
       editorOnly: true,
-      hidden: (content) => content.dateMode === "time",
     },
     timeTitle: {
       label: {
@@ -309,8 +297,7 @@ export default {
       classes: true,
       bindable: true,
       propertyHelp: {
-        tooltip:
-          "If set to `true`, the date picker will be rendered at trigger button level and not above all elements. This may be useful in the case of a date picker in a pop-up.",
+        tooltip: "If set to `true`, the date picker will be rendered at trigger button level and not above all elements. This may be useful in the case of a date picker in a pop-up.",
       },
     },
     calendarOnlyFit: {
@@ -604,7 +591,6 @@ export default {
       section: "settings",
       defaultValue: false,
       hidden: (content) => content.enableMultiCalendars,
-
     },
     flowHint: {
       label: {
@@ -628,18 +614,7 @@ export default {
       section: "settings",
       options: {
         item: {
-          type: "TextSelect",
-          options: {
-            options: [
-              { value: "month", label: { en: "Month" } },
-              { value: "year", label: { en: "Year" } },
-              { value: "calendar", label: { en: "Calendar" } },
-              { value: "time", label: { en: "Time" } },
-              { value: "minutes", label: { en: "Minutes" } },
-              { value: "hours", label: { en: "Hours" } },
-              { value: "seconds", label: { en: "Seconds" } },
-            ],
-          },
+          type: "Text",
         },
         movable: true,
         getItemLabel(_, index) {
@@ -736,7 +711,6 @@ export default {
       section: "settings",
       bindable: true,
       defaultValue: false,
-      hidden: (content) => content.dateMode === "time",
     },
     closeOnAutoApply: {
       label: {
@@ -746,7 +720,6 @@ export default {
       section: "settings",
       bindable: true,
       defaultValue: true,
-      hidden: (content) => !content.autoApply || content.dateMode === "time",
     },
     weekNumbers: {
       label: { en: "Week numbers" },

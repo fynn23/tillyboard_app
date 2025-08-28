@@ -93,8 +93,6 @@ export default {
             isValid,
             updateFormData,
             validationType,
-            formInputs,
-            formName,
         });
 
         function _setFormState(isSubmitting, isSubmitted) {
