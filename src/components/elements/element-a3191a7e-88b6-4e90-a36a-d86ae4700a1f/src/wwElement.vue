@@ -43,11 +43,13 @@
       class="video-controls"
       v-show="content.showControls !== false && controlsVisible"
       @mouseenter="clearHideControlsTimeout"
+      @mouseleave="hideControlsDelayed"
     >
       <div
         class="progress-container"
         @click="seekVideo"
         @mousemove="updateHoverPosition"
+        @mouseleave="hideHover"
       >
         <div class="progress-bar">
           <div class="progress-fill" :style="{ width: `${progressPercentage}%` }"></div>
@@ -151,9 +153,9 @@ export default {
     const isFullscreen = ref(false);
     const controlsVisible = ref(true);
     const controlsTimeout = ref(null);
-    const framerate = ref(0);
+    const framerate = ref(0); // This will hold the detected/estimated framerate
 
-    // Internal variable for current time
+    // Internal variable for current time (for WeWeb)
     const { value: currentTimeVar, setValue: setCurrentTimeVar } = wwLib.wwVariable.useComponentVariable({
       uid: props.uid,
       name: 'currentTime',
@@ -161,7 +163,7 @@ export default {
       defaultValue: 0
     });
 
-    // Internal variable for duration
+    // Internal variable for duration (for WeWeb)
     const { value: durationVar, setValue: setDurationVar } = wwLib.wwVariable.useComponentVariable({
       uid: props.uid,
       name: 'duration',
@@ -169,7 +171,7 @@ export default {
       defaultValue: 0
     });
 
-    // Internal variable for playing state
+    // Internal variable for playing state (for WeWeb)
     const { value: isPlayingVar, setValue: setIsPlayingVar } = wwLib.wwVariable.useComponentVariable({
       uid: props.uid,
       name: 'isPlaying',
@@ -177,7 +179,7 @@ export default {
       defaultValue: false
     });
 
-    // Internal variable for framerate
+    // Internal variable for framerate (for WeWeb)
     const { value: framerateVar, setValue: setFramerateVar } = wwLib.wwVariable.useComponentVariable({
       uid: props.uid,
       name: 'framerate',
@@ -197,7 +199,7 @@ export default {
 
     // Progress percentage computed property
     const progressPercentage = computed(() => {
-      if (duration.value <= 0) return 0;
+      if (duration.value <= 0 || isNaN(duration.value) || !isFinite(duration.value)) return 0;
       return (currentTime.value / duration.value) * 100;
     });
 
@@ -207,13 +209,14 @@ export default {
         // Reset player state when source changes
         currentTime.value = 0;
         duration.value = 0;
+        framerate.value = 0; // Reset framerate on source change
         setCurrentTimeVar(0);
         setDurationVar(0);
+        setFramerateVar(0); // Reset framerate variable on source change
 
-        // Load the new video
-        videoElement.value.load();
+        videoElement.value.load(); // Load the new video
 
-        // Autoplay if configured
+        // Autoplay if configured (only if not in editor)
         if (props.content?.autoplay && !isEditing.value) {
           playVideo();
         }
@@ -238,7 +241,7 @@ export default {
 
     // Format time (seconds) to MM:SS format
     const formatTime = (timeInSeconds) => {
-      if (isNaN(timeInSeconds) || timeInSeconds === Infinity) return '00:00';
+      if (isNaN(timeInSeconds) || !isFinite(timeInSeconds) || timeInSeconds < 0) return '00:00';
 
       const minutes = Math.floor(timeInSeconds / 60);
       const seconds = Math.floor(timeInSeconds % 60);
@@ -249,10 +252,59 @@ export default {
     // Video event handlers
     const onTimeUpdate = () => {
       if (!videoElement.value) return;
-
       currentTime.value = videoElement.value.currentTime;
       setCurrentTimeVar(currentTime.value);
     };
+
+    let frameEstimationRAFId = null; // Stores requestAnimationFrame ID
+    let frameEstimationStartVideoTime = 0;
+    let frameEstimationFrameCount = 0;
+    let frameEstimationStartTime = 0; // performance.now()
+
+    const estimateFramerate = () => {
+        if (!videoElement.value || !isPlaying.value || isEditing.value || framerate.value > 0) {
+            cancelAnimationFrame(frameEstimationRAFId);
+            frameEstimationRAFId = null;
+            return;
+        }
+
+        const currentVideoTime = videoElement.value.currentTime;
+        const now = performance.now();
+
+        // Initialize on first call or when video time jumps (seek)
+        if (frameEstimationStartTime === 0 || Math.abs(currentVideoTime - frameEstimationStartVideoTime - (frameEstimationFrameCount * (1/30))) > 1) {
+            frameEstimationStartTime = now;
+            frameEstimationStartVideoTime = currentVideoTime;
+            frameEstimationFrameCount = 0;
+        }
+
+        // Count frames as video time progresses
+        frameEstimationFrameCount++;
+
+        const elapsedVideoTime = currentVideoTime - frameEstimationStartVideoTime;
+        const elapsedRealTime = (now - frameEstimationStartTime) / 1000; // Convert to seconds
+
+        // Only calculate if enough time/frames have passed for a reasonable average
+        if (elapsedVideoTime >= 1 && frameEstimationFrameCount >= 20) { // After 1 second and 20+ "frames"
+            const estimatedFps = Math.round(frameEstimationFrameCount / elapsedVideoTime);
+            // Basic sanity check to avoid extreme values and 0
+            if (estimatedFps > 0 && estimatedFps < 120) {
+                framerate.value = estimatedFps;
+                setFramerateVar(framerate.value);
+                cancelAnimationFrame(frameEstimationRAFId); // Stop estimation
+                frameEstimationRAFId = null;
+                return; // Exit recursion
+            } else if (elapsedRealTime >= 5 && estimatedFps > 0) { // If it takes longer, accept it
+                 framerate.value = estimatedFps;
+                 setFramerateVar(framerate.value);
+                 cancelAnimationFrame(frameEstimationRAFId);
+                 frameEstimationRAFId = null;
+                 return;
+            }
+        }
+        frameEstimationRAFId = requestAnimationFrame(estimateFramerate);
+    };
+
 
     const onLoadedMetadata = () => {
       if (!videoElement.value) return;
@@ -260,43 +312,23 @@ export default {
       duration.value = videoElement.value.duration;
       setDurationVar(duration.value);
 
-      // Detect framerate if possible
-      if (videoElement.value) {
-        try {
-          // Try to access video tracks to get framerate
-          if (videoElement.value.videoTracks && videoElement.value.videoTracks.length > 0) {
-            framerate.value = videoElement.value.videoTracks[0].frameRate || 0;
-            setFramerateVar(framerate.value); // Set WeWeb variable
-          } else {
-            // Fallback method: we'll estimate framerate after some playback
-            // Only attempt this if not already playing or if framerate is 0
-            if (!isPlaying.value && framerate.value === 0) {
-              setTimeout(() => {
-                if (videoElement.value && isPlaying.value) {
-                  const startTime = videoElement.value.currentTime;
-                  let frames = 0;
+      // Attempt to detect framerate from videoTracks first (most accurate)
+      if (videoElement.value.videoTracks && videoElement.value.videoTracks.length > 0) {
+        const detectedFps = videoElement.value.videoTracks[0].frameRate;
+        if (detectedFps > 0) {
+          framerate.value = detectedFps;
+          setFramerateVar(framerate.value);
+        }
+      }
 
-                  const checkFrame = () => {
-                    frames++;
-                    if (frames >= 10 || !isPlaying.value) { // Measure over 10 frames or until paused
-                      const endTime = videoElement.value?.currentTime || startTime;
-                      const timeElapsed = endTime - startTime;
-                      if (timeElapsed > 0) {
-                        framerate.value = Math.round(frames / timeElapsed);
-                        setFramerateVar(framerate.value);
-                      }
-                    } else {
-                      requestAnimationFrame(checkFrame);
-                    }
-                  };
-
-                  requestAnimationFrame(checkFrame);
-                }
-              }, 1000); // Wait a second before measuring
-            }
-          }
-        } catch (error) {
-          console.warn('Could not detect framerate:', error);
+      // If framerate still 0 (not detected via videoTracks) and not in editor,
+      // and video is playing, start estimation via requestAnimationFrame
+      if (framerate.value === 0 && !isEditing.value && isPlaying.value) {
+        if (!frameEstimationRAFId) { // Prevent multiple RAF loops
+            frameEstimationStartVideoTime = videoElement.value.currentTime;
+            frameEstimationStartTime = performance.now();
+            frameEstimationFrameCount = 0;
+            frameEstimationRAFId = requestAnimationFrame(estimateFramerate);
         }
       }
 
@@ -312,17 +344,30 @@ export default {
       isPlaying.value = true;
       setIsPlayingVar(true);
 
+      // If framerate hasn't been detected yet, start/continue estimation
+      if (framerate.value === 0 && !isEditing.value) {
+        if (!frameEstimationRAFId) {
+            frameEstimationStartVideoTime = videoElement.value.currentTime;
+            frameEstimationStartTime = performance.now();
+            frameEstimationFrameCount = 0;
+            frameEstimationRAFId = requestAnimationFrame(estimateFramerate);
+        }
+      }
+
       emit('trigger-event', {
         name: 'play',
         event: {
           currentTime: currentTime.value
         }
       });
+      showControls(); // Ensure controls are shown on play
     };
 
     const onPause = () => {
       isPlaying.value = false;
       setIsPlayingVar(false);
+      cancelAnimationFrame(frameEstimationRAFId); // Stop estimation when paused
+      frameEstimationRAFId = null;
 
       emit('trigger-event', {
         name: 'pause',
@@ -330,11 +375,14 @@ export default {
           currentTime: currentTime.value
         }
       });
+      showControls(); // Ensure controls are shown on pause
     };
 
     const onEnded = () => {
       isPlaying.value = false;
       setIsPlayingVar(false);
+      cancelAnimationFrame(frameEstimationRAFId); // Stop estimation when ended
+      frameEstimationRAFId = null;
 
       emit('trigger-event', {
         name: 'ended',
@@ -346,6 +394,7 @@ export default {
         videoElement.value.currentTime = 0;
         playVideo();
       }
+      showControls(); // Ensure controls are shown when ended
     };
 
     const onVolumeChange = () => {
@@ -368,18 +417,36 @@ export default {
       if (isEditing.value) return;
       if (!videoElement.value) return;
 
-      const playPromise = videoElement.value.play();
-
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.error('Error playing video:', error);
-          // Common error for autoplay without user interaction/muted video
-          if (error.name === "NotAllowedError") {
-            console.warn("Autoplay was prevented. User interaction or 'start muted' might be required.");
-          }
-        });
+      // Handle autoplay policy: try muted if initial unmuted play fails and autoplay is desired
+      const initialPlayPromise = videoElement.value.play();
+      if (initialPlayPromise !== undefined) {
+          initialPlayPromise.catch(error => {
+              // NotAllowedError is typical for unmuted autoplay without user gesture
+              if (error.name === "NotAllowedError" && props.content?.autoplay && !props.content?.startMuted) {
+                  console.warn("Autoplay was prevented (unmuted). Attempting muted autoplay.");
+                  videoElement.value.muted = true; // Mute it
+                  isMuted.value = true;
+                  const mutedPlayPromise = videoElement.value.play(); // Try playing muted
+                  if (mutedPlayPromise !== undefined) {
+                      mutedPlayPromise.catch(mutedError => {
+                          console.error('Error playing video (muted retry failed):', mutedError);
+                          isPlaying.value = false; // Ensure isPlaying is false if play fails
+                          setIsPlayingVar(false);
+                      });
+                  }
+              } else if (error.name === "AbortError") {
+                  console.log("Video play was aborted (e.g., user paused before promise resolved).");
+                  isPlaying.value = false; // Ensure isPlaying is false if play fails
+                  setIsPlayingVar(false);
+              } else {
+                  console.error('Error playing video:', error);
+                  isPlaying.value = false; // Ensure isPlaying is false if play fails
+                  setIsPlayingVar(false);
+              }
+          });
       }
     };
+
 
     const pauseVideo = () => {
       if (isEditing.value) return;
@@ -401,7 +468,7 @@ export default {
 
     const seekVideo = (event) => {
       if (isEditing.value) return;
-      if (!videoElement.value || duration.value <= 0) return;
+      if (!videoElement.value || duration.value <= 0 || isNaN(duration.value) || !isFinite(duration.value)) return;
 
       const progressBar = event.currentTarget;
       const rect = progressBar.getBoundingClientRect();
@@ -414,19 +481,21 @@ export default {
     };
 
     const updateHoverPosition = (event) => {
-      if (!videoElement.value || duration.value <= 0) return;
+      if (!videoElement.value || duration.value <= 0 || isNaN(duration.value) || !isFinite(duration.value)) {
+        isHovering.value = false; // Hide hover if duration is invalid
+        return;
+      }
 
       const progressBar = event.currentTarget;
       const rect = progressBar.getBoundingClientRect();
       const hoverPos = event.clientX - rect.left;
-      const hoverPercentage = hoverPos / rect.width;
+      const hoverPercentage = Math.max(0, Math.min(1, hoverPos / rect.width)); // Clamp between 0 and 1
 
       isHovering.value = true;
       hoverPosition.value = hoverPos;
       hoverTime.value = hoverPercentage * duration.value;
     };
 
-    // Added to handle mouse leave on progress bar
     const hideHover = () => {
       isHovering.value = false;
     };
@@ -436,13 +505,20 @@ export default {
       if (!videoElement.value) return;
 
       const volumeValue = parseFloat(newVolume);
-      videoElement.value.volume = volumeValue;
-      volume.value = volumeValue;
+      // Ensure volume is between 0 and 1
+      const clampedVolume = Math.max(0, Math.min(1, volumeValue));
+
+      videoElement.value.volume = clampedVolume;
+      volume.value = clampedVolume;
 
       // If setting volume above 0, ensure it's not muted
-      if (volumeValue > 0 && videoElement.value.muted) {
+      if (clampedVolume > 0 && videoElement.value.muted) {
         videoElement.value.muted = false;
         isMuted.value = false;
+      } else if (clampedVolume === 0 && !videoElement.value.muted) {
+        // If volume is set to 0, mute it
+        videoElement.value.muted = true;
+        isMuted.value = true;
       }
     };
 
@@ -452,6 +528,11 @@ export default {
 
       videoElement.value.muted = !videoElement.value.muted;
       isMuted.value = videoElement.value.muted;
+      // If we unmute and volume was 0, set it to a default or previous value
+      if (!videoElement.value.muted && videoElement.value.volume === 0) {
+        videoElement.value.volume = props.content?.volume || 0.5; // Restore to default or prop volume (0.5 if prop not set)
+        volume.value = videoElement.value.volume;
+      }
     };
 
     // Fullscreen handling
@@ -483,23 +564,33 @@ export default {
 
     // Controls visibility
     const showControls = () => {
+      // Controls are always visible in editor mode, unless explicitly hidden by prop
       if (props.content?.showControls === false) return;
+      if (isEditing.value) {
+        controlsVisible.value = true;
+        return;
+      }
 
       controlsVisible.value = true;
       clearHideControlsTimeout();
 
+      // Auto-hide only if configured and playing
       if (props.content?.autoHideControls && isPlaying.value) {
         controlsTimeout.value = setTimeout(() => {
           controlsVisible.value = false;
-        }, 3000);
+        }, 3000); // Hide after 3 seconds of inactivity
       }
     };
 
     const hideControlsDelayed = () => {
+      // Do not hide controls in editor mode, unless explicitly hidden by prop
+      if (props.content?.showControls === false) return;
+      if (isEditing.value) return;
+
       if (props.content?.autoHideControls && isPlaying.value) {
         controlsTimeout.value = setTimeout(() => {
           controlsVisible.value = false;
-        }, 1000);
+        }, 1000); // Hide after 1 second of mouse leave
       }
     };
 
@@ -518,6 +609,8 @@ export default {
         doc.webkitFullscreenElement ||
         doc.msFullscreenElement
       );
+      // Ensure controls are visible when entering/exiting fullscreen
+      showControls();
     };
 
     // Lifecycle hooks
@@ -538,6 +631,12 @@ export default {
           videoElement.value.muted = true;
           isMuted.value = true;
         }
+
+        // If autoplay is true and not in editor, attempt to play
+        // This is now handled within playVideo, which will attempt muted play if needed.
+        if (props.content?.autoplay && !isEditing.value) {
+          playVideo();
+        }
       }
     });
 
@@ -548,6 +647,10 @@ export default {
       doc.removeEventListener('msfullscreenchange', handleFullscreenChange);
 
       clearHideControlsTimeout();
+      if (frameEstimationRAFId) { // Clean up requestAnimationFrame on unmount
+        cancelAnimationFrame(frameEstimationRAFId);
+        frameEstimationRAFId = null;
+      }
     });
 
     // Public methods (actions)
@@ -556,17 +659,17 @@ export default {
       if (!videoElement.value) return;
 
       const seekTime = parseFloat(time);
-      if (isNaN(seekTime)) return;
+      if (isNaN(seekTime) || !isFinite(seekTime)) return;
 
       videoElement.value.currentTime = Math.min(Math.max(0, seekTime), duration.value || 0);
     };
 
     const seekToPercentage = (percentage) => {
       if (isEditing.value) return;
-      if (!videoElement.value || duration.value <= 0) return;
+      if (!videoElement.value || duration.value <= 0 || isNaN(duration.value) || !isFinite(duration.value)) return;
 
       const seekPercentage = parseFloat(percentage);
-      if (isNaN(seekPercentage)) return;
+      if (isNaN(seekPercentage) || !isFinite(seekPercentage)) return;
 
       const clampedPercentage = Math.min(Math.max(0, seekPercentage), 100);
       const newTime = (clampedPercentage / 100) * duration.value;
@@ -575,7 +678,7 @@ export default {
     };
 
     return {
-      // Refs
+      // Refs and Reactive State
       videoElement,
       isPlaying,
       isMuted,
@@ -587,9 +690,9 @@ export default {
       isHovering,
       hoverPosition,
       hoverTime,
-      framerate,
+      framerate, // Exposed framerate state
 
-      // Computed
+      // Computed Properties
       videoSrc,
       progressPercentage,
 
@@ -606,7 +709,7 @@ export default {
       togglePlay,
       seekVideo,
       updateHoverPosition,
-      hideHover, // Make sure this is returned for use in template
+      hideHover,
       setVolume,
       toggleMute,
       toggleFullscreen,
@@ -614,7 +717,7 @@ export default {
       hideControlsDelayed,
       clearHideControlsTimeout,
 
-      // Action methods
+      // Action Methods (exposed for WeWeb actions)
       seekToTime,
       seekToPercentage
     };
@@ -627,13 +730,12 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: #000;
+  background-color: transparent;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  // Ensure minimum height for controls visibility if player is very small
-  min-height: 50px; 
+  min-height: 50px; // Ensure controls are always somewhat visible
 
   &:hover {
     .video-controls {
@@ -645,7 +747,8 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: contain; // Ensures the video scales down within its container without cropping
-    background-color: #000;
+    background-color: transparent;
+    cursor: pointer; // Indicate that the video itself is clickable
   }
 
   .big-play-button-container {
@@ -669,7 +772,7 @@ export default {
       justify-content: center;
       cursor: pointer;
       pointer-events: auto; // Re-enables pointer events for the button itself
-      transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+      transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.3s ease; // Smooth opacity transition
 
       &:hover {
         transform: scale(1.1);
@@ -682,9 +785,10 @@ export default {
         fill: white;
       }
 
+      // State when video is playing
       &.is-playing {
-        opacity: 0; // Hide when playing and controls are not hovered
-        transform: scale(0.8);
+        opacity: 0; // Hidden by default when playing
+        transform: scale(0.8); // Slightly smaller
 
         &:hover {
           opacity: 1; // Show on hover even when playing
@@ -694,11 +798,11 @@ export default {
     }
   }
 
-  // Show big play button when controls are visible or not playing
+  // Show big play button when controls are visible (e.g., mouse over player)
+  // This overrides the 'is-playing' opacity if controls are explicitly visible.
   &.controls-visible .big-play-button-container .big-play-button.is-playing {
     opacity: 0.7; // Slightly visible when controls are shown and playing
   }
-
 
   .video-controls {
     position: absolute;
@@ -712,6 +816,7 @@ export default {
     transition: opacity 0.3s ease;
     display: flex; // Use flexbox for the controls row
     flex-direction: column; // Stack progress bar and controls row
+    color: white; // Default text color for controls
 
     .progress-container {
       width: 100%;
@@ -729,6 +834,7 @@ export default {
         border-radius: 2px;
         position: relative;
         overflow: visible; // Allows scrubber and hover preview to be visible
+        transition: height 0.2s ease; // Smooth height change
 
         &:hover {
           height: 6px; // Slightly thicker on hover
@@ -767,11 +873,8 @@ export default {
           padding: 4px 8px;
           pointer-events: none;
           white-space: nowrap; // Prevent time from wrapping
-
-          .hover-time {
-            color: white;
-            font-size: 12px;
-          }
+          color: white;
+          font-size: 12px;
         }
       }
     }
@@ -814,6 +917,7 @@ export default {
         margin: 0 10px;
         display: flex;
         align-items: center;
+        flex-shrink: 0;
 
         .time-separator {
           margin: 0 4px;
@@ -832,6 +936,7 @@ export default {
         align-items: center;
         position: relative;
         margin-left: auto; // Pushes volume and fullscreen to the right
+        flex-shrink: 0;
 
         .volume-slider-container {
           width: 0; // Hidden by default
@@ -844,6 +949,7 @@ export default {
             width: 80px;
             margin: 0 8px;
             -webkit-appearance: none;
+            appearance: none; // Standard for all browsers
             height: 4px;
             background-color: rgba(255, 255, 255, 0.3);
             border-radius: 2px;
@@ -851,6 +957,7 @@ export default {
 
             &::-webkit-slider-thumb {
               -webkit-appearance: none;
+              appearance: none;
               width: 12px;
               height: 12px;
               background-color: white;
@@ -898,7 +1005,7 @@ export default {
     }
 
     .video-controls {
-      padding: 8px 8px 0; // Adjust padding
+      padding: 8px 8px; // Adjust padding
 
       .controls-row {
         .time-display {
@@ -917,8 +1024,10 @@ export default {
   .custom-video-player {
     .video-controls {
       .controls-row {
+        // Only hide time display if necessary, framerate is valuable info
+        // Consider keeping framerate if space allows, or re-evaluate layout
         .time-display {
-          display: none; // Hide time display on very small screens
+          // display: none; // You can uncomment this if needed
         }
       }
     }

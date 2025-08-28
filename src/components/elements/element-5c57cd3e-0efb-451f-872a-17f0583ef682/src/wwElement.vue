@@ -180,10 +180,11 @@ export default {
     pointer-events: unset !important;
 }
 .ghost {
-    border: 2px dashed #2B67F5;
-    border-radius: 10px; /* Rundung */
-    background-color: rgba(240, 240, 240, 0.25); /* Grauer Hintergrund mit Transparenz */
-    margin: 5px 0; /* Abstand von 5px oben und unten */
+    outline: 2px dashed #2B67F5;
+    outline-offset: 2px;
+    border-radius: 16px;
+    background-color: transparent;
+    margin: 10px 0;
 }
 
 </style>

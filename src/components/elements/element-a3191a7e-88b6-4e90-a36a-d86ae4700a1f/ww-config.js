@@ -153,74 +153,107 @@ export default {
     }
   ],
   actions: [
-    {
-      action: 'playVideo',
-      label: {
-        en: 'Play'
-      }
-    },
-    {
-      action: 'pauseVideo',
-      label: {
-        en: 'Pause'
-      }
-    },
-    {
-      action: 'togglePlay',
-      label: {
-        en: 'Toggle Play/Pause'
-      }
-    },
-    {
-      action: 'seekToTime',
-      label: {
-        en: 'Seek to Time'
-      },
-      args: [
-        {
-          name: 'time',
-          type: 'number',
-          label: {
-            en: 'Time (seconds)'
-          }
-        }
-      ]
-    },
-    {
-      action: 'seekToPercentage',
-      label: {
-        en: 'Seek to Percentage'
-      },
-      args: [
-        {
-          name: 'percentage',
-          type: 'number',
-          label: {
-            en: 'Percentage (0-100)'
-          }
-        }
-      ]
-    },
-    {
-      action: 'setVolume',
-      label: {
-        en: 'Set Volume'
-      },
-      args: [
-        {
-          name: 'volume',
-          type: 'number',
-          label: {
-            en: 'Volume (0-1)'
-          }
-        }
-      ]
-    },
-    {
-      action: 'toggleMute',
-      label: {
-        en: 'Toggle Mute'
-      }
+  {
+    action: 'playVideo',
+    label: {
+      en: 'Play'
     }
-  ]
+  },
+  {
+    action: 'pauseVideo',
+    label: {
+      en: 'Pause'
+    }
+  },
+  {
+    action: 'togglePlay',
+    label: {
+      en: 'Toggle Play/Pause'
+    }
+  },
+  {
+    action: 'seekToTime',
+    label: {
+      en: 'Seek to Time'
+    },
+    args: [
+      {
+        name: 'time',
+        type: 'number',
+        label: {
+          en: 'Time (seconds)'
+        }
+      }
+    ]
+  },
+  {
+    action: 'seekToPercentage',
+    label: {
+      en: 'Seek to Percentage'
+    },
+    args: [
+      {
+        name: 'percentage',
+        type: 'number',
+        label: {
+          en: 'Percentage (0-100)'
+        }
+      }
+    ]
+  },
+  {
+    action: 'setVolume',
+    label: {
+      en: 'Set Volume'
+    },
+    args: [
+      {
+        name: 'volume',
+        type: 'number',
+        label: {
+          en: 'Volume (0-1)'
+        }
+      }
+    ]
+  },
+  {
+    action: 'toggleMute',
+    label: {
+      en: 'Toggle Mute'
+    }
+  },
+  {
+    action: 'toggleFullscreen',
+    label: {
+      en: 'Toggle Fullscreen'
+    }
+  }
+],
+  // Correctly adding the variables section as per your documentation
+  variables: [
+    {
+      name: 'currentTime',
+      label: { en: 'Current Time (seconds)' },
+      type: 'number',
+      defaultValue: 0,
+    },
+    {
+      name: 'duration',
+      label: { en: 'Total Duration (seconds)' },
+      type: 'number',
+      defaultValue: 0,
+    },
+    {
+      name: 'isPlaying',
+      label: { en: 'Is Playing' },
+      type: 'boolean',
+      defaultValue: false,
+    },
+    {
+      name: 'framerate',
+      label: { en: 'Framerate (fps)' },
+      type: 'number',
+      defaultValue: 0,
+    },
+  ],
 };

@@ -1,0 +1,1 @@
+{"name":"draggable_row","version":"0.1.3","scripts":{"build":"weweb build","serve":"weweb serve"},"devDependencies":{},"dependencies":{"vuedraggable":"^4.1.0"}}
