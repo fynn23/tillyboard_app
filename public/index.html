@@ -1,14 +1,8 @@
 <!DOCTYPE html>
-<html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <script>
-      // Wenn kein direkter Treffer auf dem Server, leite an Root mit ursprünglichem Pfad
-      const path = window.location.pathname + window.location.search + window.location.hash;
-      if (path !== "/") {
-        sessionStorage.setItem("spa_redirect_path", path);
-        window.location.href = "/";
-      }
-    </script>
-  </head>
+<html>
+    <head>
+        <script>
+            window.location.href = "/de/"
+        </script>
+    </head>
 </html>
