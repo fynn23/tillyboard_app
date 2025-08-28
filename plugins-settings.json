@@ -1,39 +1,152 @@
 {
+    "cabb43dd-6161-4140-8ebf-03b6fb045a0b": {
+        "id": "92750400-6655-4555-98ef-85c8b510d001",
+        "name": "Google",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "cabb43dd-6161-4140-8ebf-03b6fb045a0b",
+        "publicData": {}
+    },
+    "2bd1c688-31c5-443e-ae25-59aa5b6431fb": {
+        "id": "c8122dea-8edf-4605-848f-71b59916e5b2",
+        "name": "REST API",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "2bd1c688-31c5-443e-ae25-59aa5b6431fb",
+        "publicData": {}
+    },
+    "8bc1b5c9-29e4-4269-becb-a2e1a8de9127": {
+        "id": "a20899f7-c74b-4f49-90a1-367de7103cf0",
+        "name": "WeWeb Email",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "8bc1b5c9-29e4-4269-becb-a2e1a8de9127",
+        "publicData": {}
+    },
+    "832d6f7a-42c3-43f1-a3ce-9a678272f811": {
+        "id": "cacdbf04-23e0-4c25-a377-f79647787fb3",
+        "name": "Date",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "832d6f7a-42c3-43f1-a3ce-9a678272f811",
+        "publicData": {}
+    },
+    "2adce8d5-2056-479d-a21a-068f55a8077f": {
+        "id": "bf1ccc6c-efc2-41cf-a870-f285fb057bdc",
+        "name": "Mapbox",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "2adce8d5-2056-479d-a21a-068f55a8077f",
+        "publicData": {}
+    },
+    "ee24f5ac-e15e-4ddd-baa4-0b4baedf90c9": {
+        "id": "91bffb75-cc5c-4cce-a7fc-1118c473ce69",
+        "name": "CSV",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "ee24f5ac-e15e-4ddd-baa4-0b4baedf90c9",
+        "publicData": {}
+    },
+    "9c40819b-4a8f-468f-9ba5-4b9699f3361f": {
+        "id": "46b9b437-d1f2-4566-af02-1beeced0ab9a",
+        "name": "Charts",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "9c40819b-4a8f-468f-9ba5-4b9699f3361f",
+        "publicData": {}
+    },
+    "66a79c98-70e7-4bc4-8859-20776b024ec2": {
+        "id": "919275bd-106c-4d84-899c-ea98d62300a4",
+        "name": "PWA",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "66a79c98-70e7-4bc4-8859-20776b024ec2",
+        "publicData": {}
+    },
+    "3a407b45-9c63-471d-b09b-15cf797e5566": {
+        "id": "dde558d9-43e3-4202-989c-aee440146311",
+        "name": "Sound",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "3a407b45-9c63-471d-b09b-15cf797e5566",
+        "publicData": {}
+    },
+    "00d22f72-1a03-44f8-ad68-c593dc80b543": {
+        "id": "e961c6d3-1569-4f3f-8213-3c485d33aafe",
+        "name": "Stripe",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "00d22f72-1a03-44f8-ad68-c593dc80b543",
+        "publicData": {
+            "publicApiKey": "pk_live_51Mhcs3ApAW7u42iqxmxp1geErZ1brLZWZi8t2FnSmBNvfHUqK7q8TjXAIuKscUdCmKfcIB0JjGIGvCeCMc0AXaYe00aMhQ9PgS",
+            "publicTestApiKey": "pk_live_51Mhcs3ApAW7u42iqxmxp1geErZ1brLZWZi8t2FnSmBNvfHUqK7q8TjXAIuKscUdCmKfcIB0JjGIGvCeCMc0AXaYe00aMhQ9PgS"
+        }
+    },
     "69d4a5bb-09a3-4f3d-a94e-667c21c057eb": {
-        "id": "c1f58608-ac67-4aca-b529-8e0648605ebc",
+        "id": "d18f0a37-3287-4508-ae2b-bcee9cd0f719",
         "name": "NPM",
-        "designId": "bb46d291-a9a5-4c1e-b599-d4950d3d7c31",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
         "pluginId": "69d4a5bb-09a3-4f3d-a94e-667c21c057eb",
         "publicData": {
             "packages": [
                 {
-                    "link": "http://devongovett.github.com/pdfkit/",
-                    "name": "pdf.js",
-                    "version": "0.1.0",
+                    "link": "https://github.com/kazuhikoarase/qrcode-generator#readme",
+                    "name": "qrcode-generator",
+                    "version": "1.4.4",
+                    "instanceName": ""
+                },
+                {
+                    "link": "https://github.com/mebjas/html5-qrcode#readme",
+                    "name": "html5-qrcode",
+                    "version": "2.2.1",
+                    "instanceName": "html5-qrcode"
+                },
+                {
+                    "link": "https://fengyuanchen.github.io/compressorjs",
+                    "name": "compressorjs",
+                    "version": "1.2.1",
+                    "instanceName": ""
+                },
+                {
+                    "link": "https://github.com/tus/tus-js-client",
+                    "name": "tus-js-client",
+                    "version": "4.1.0",
                     "instanceName": ""
                 }
             ]
         }
     },
-    "f9ef41c3-1c53-4857-855b-f2f6a40b7186": {
-        "id": "e5b50bc0-ecbc-4324-b466-c25d224fdaf7",
-        "name": "Supabase",
-        "designId": "bb46d291-a9a5-4c1e-b599-d4950d3d7c31",
-        "pluginId": "f9ef41c3-1c53-4857-855b-f2f6a40b7186",
-        "publicData": {
-            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1yYWtrandubnF1bHBtYnpxdGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjUyODY2NzcsImV4cCI6MjA0MDg2MjY3N30.CwbDOp6eN_nHFdw9hBwWWAabnx_vSIiA8VHtHfg8PdQ",
-            "projectUrl": "https://mrakkjwnnqulpmbzqtie.supabase.co",
-            "realtimeTables": {}
-        }
-    },
     "1fa0dd68-5069-436c-9a7d-3b54c340f1fa": {
-        "id": "e036a2dd-8a30-483b-9929-1e3115259862",
+        "id": "419460c4-9544-4495-959a-fd4e379e4071",
         "name": "Supabase Auth",
-        "designId": "bb46d291-a9a5-4c1e-b599-d4950d3d7c31",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
         "pluginId": "1fa0dd68-5069-436c-9a7d-3b54c340f1fa",
         "publicData": {
-            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1yYWtrandubnF1bHBtYnpxdGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjUyODY2NzcsImV4cCI6MjA0MDg2MjY3N30.CwbDOp6eN_nHFdw9hBwWWAabnx_vSIiA8VHtHfg8PdQ",
-            "projectUrl": "https://mrakkjwnnqulpmbzqtie.supabase.co"
+            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzcXpod3hvYWtwaXlna2VscmV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY5ODUwODgsImV4cCI6MjAwMjU2MTA4OH0.HmwQQW-WI9_btPDTTmV0gaDWZuSrG3Zay13Bo3IyVws",
+            "roleTable": "role",
+            "projectUrl": "https://gsqzhwxoakpiygkelrev.supabase.co",
+            "userRoleTable": "user_role",
+            "afterNotSignInPageId": "9da3804c-5836-44ea-ad3b-4575b34799c6"
+        }
+    },
+    "d66a250d-8468-469e-ad33-ee028f632398": {
+        "id": "3edbff6e-661e-4f00-8af5-f50511855eee",
+        "name": "OpenAI",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "d66a250d-8468-469e-ad33-ee028f632398",
+        "publicData": {}
+    },
+    "f9ef41c3-1c53-4857-855b-f2f6a40b7186": {
+        "id": "9b7e97ce-abd3-4ac1-bd03-f4028061ca90",
+        "name": "Supabase",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "f9ef41c3-1c53-4857-855b-f2f6a40b7186",
+        "publicData": {
+            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzcXpod3hvYWtwaXlna2VscmV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY5ODUwODgsImV4cCI6MjAwMjU2MTA4OH0.HmwQQW-WI9_btPDTTmV0gaDWZuSrG3Zay13Bo3IyVws",
+            "projectUrl": "https://gsqzhwxoakpiygkelrev.supabase.co",
+            "realtimeTables": {
+                "review": true,
+                "activity": true,
+                "notes_all": true,
+                "tasks_all": true,
+                "shotlist_all": true,
+                "schedules_all": true,
+                "tasks_columns": true,
+                "member_project": true,
+                "storyboard_all": true,
+                "tasks_comments": true,
+                "equipment_packing": true
+            }
         }
     }
 }
