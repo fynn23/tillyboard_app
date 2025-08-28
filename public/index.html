@@ -1,16 +1,8 @@
 <!DOCTYPE html>
-<html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <script>
-      const originalPath = window.location.pathname + window.location.search + window.location.hash;
-
-      if (!originalPath.startsWith("/de/")) {
-        // Leite zu /de/ weiter, aber merke dir vorher den Pfad
-        sessionStorage.setItem("ww-redirect-path", originalPath);
-        window.location.href = "/de/";
-      }
-    </script>
-  </head>
-  <body></body>
+<html>
+    <head>
+        <script>
+            window.location.href = "/de/"
+        </script>
+    </head>
 </html>
