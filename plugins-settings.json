@@ -72,6 +72,29 @@
             "publicTestApiKey": "pk_live_51Mhcs3ApAW7u42iqxmxp1geErZ1brLZWZi8t2FnSmBNvfHUqK7q8TjXAIuKscUdCmKfcIB0JjGIGvCeCMc0AXaYe00aMhQ9PgS"
         }
     },
+    "f9ef41c3-1c53-4857-855b-f2f6a40b7186": {
+        "id": "9b7e97ce-abd3-4ac1-bd03-f4028061ca90",
+        "name": "Supabase",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "f9ef41c3-1c53-4857-855b-f2f6a40b7186",
+        "publicData": {
+            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzcXpod3hvYWtwaXlna2VscmV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY5ODUwODgsImV4cCI6MjAwMjU2MTA4OH0.HmwQQW-WI9_btPDTTmV0gaDWZuSrG3Zay13Bo3IyVws",
+            "projectUrl": "https://gsqzhwxoakpiygkelrev.supabase.co",
+            "realtimeTables": {
+                "review": true,
+                "activity": true,
+                "notes_all": true,
+                "tasks_all": true,
+                "shotlist_all": true,
+                "schedules_all": true,
+                "tasks_columns": true,
+                "member_project": true,
+                "storyboard_all": true,
+                "tasks_comments": true,
+                "equipment_packing": true
+            }
+        }
+    },
     "69d4a5bb-09a3-4f3d-a94e-667c21c057eb": {
         "id": "d18f0a37-3287-4508-ae2b-bcee9cd0f719",
         "name": "NPM",
@@ -125,28 +148,5 @@
         "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
         "pluginId": "d66a250d-8468-469e-ad33-ee028f632398",
         "publicData": {}
-    },
-    "f9ef41c3-1c53-4857-855b-f2f6a40b7186": {
-        "id": "9b7e97ce-abd3-4ac1-bd03-f4028061ca90",
-        "name": "Supabase",
-        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
-        "pluginId": "f9ef41c3-1c53-4857-855b-f2f6a40b7186",
-        "publicData": {
-            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzcXpod3hvYWtwaXlna2VscmV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY5ODUwODgsImV4cCI6MjAwMjU2MTA4OH0.HmwQQW-WI9_btPDTTmV0gaDWZuSrG3Zay13Bo3IyVws",
-            "projectUrl": "https://gsqzhwxoakpiygkelrev.supabase.co",
-            "realtimeTables": {
-                "review": true,
-                "activity": true,
-                "notes_all": true,
-                "tasks_all": true,
-                "shotlist_all": true,
-                "schedules_all": true,
-                "tasks_columns": true,
-                "member_project": true,
-                "storyboard_all": true,
-                "tasks_comments": true,
-                "equipment_packing": true
-            }
-        }
     }
 }
