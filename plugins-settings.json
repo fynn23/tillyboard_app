@@ -125,6 +125,12 @@
                     "name": "tus-js-client",
                     "version": "4.1.0",
                     "instanceName": ""
+                },
+                {
+                    "link": "https://github.com/vercel/analytics#readme",
+                    "name": "@vercel/analytics",
+                    "version": "1.5.0",
+                    "instanceName": ""
                 }
             ]
         }
