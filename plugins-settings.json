@@ -62,16 +62,6 @@
         "pluginId": "3a407b45-9c63-471d-b09b-15cf797e5566",
         "publicData": {}
     },
-    "00d22f72-1a03-44f8-ad68-c593dc80b543": {
-        "id": "e961c6d3-1569-4f3f-8213-3c485d33aafe",
-        "name": "Stripe",
-        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
-        "pluginId": "00d22f72-1a03-44f8-ad68-c593dc80b543",
-        "publicData": {
-            "publicApiKey": "pk_live_51Mhcs3ApAW7u42iqxmxp1geErZ1brLZWZi8t2FnSmBNvfHUqK7q8TjXAIuKscUdCmKfcIB0JjGIGvCeCMc0AXaYe00aMhQ9PgS",
-            "publicTestApiKey": "pk_live_51Mhcs3ApAW7u42iqxmxp1geErZ1brLZWZi8t2FnSmBNvfHUqK7q8TjXAIuKscUdCmKfcIB0JjGIGvCeCMc0AXaYe00aMhQ9PgS"
-        }
-    },
     "f9ef41c3-1c53-4857-855b-f2f6a40b7186": {
         "id": "9b7e97ce-abd3-4ac1-bd03-f4028061ca90",
         "name": "Supabase",
@@ -93,6 +83,16 @@
                 "tasks_comments": true,
                 "equipment_packing": true
             }
+        }
+    },
+    "00d22f72-1a03-44f8-ad68-c593dc80b543": {
+        "id": "e961c6d3-1569-4f3f-8213-3c485d33aafe",
+        "name": "Stripe",
+        "designId": "3cf9829e-aa37-4cc1-b61e-c7d0f0552616",
+        "pluginId": "00d22f72-1a03-44f8-ad68-c593dc80b543",
+        "publicData": {
+            "publicApiKey": "pk_live_51Mhcs3ApAW7u42iqxmxp1geErZ1brLZWZi8t2FnSmBNvfHUqK7q8TjXAIuKscUdCmKfcIB0JjGIGvCeCMc0AXaYe00aMhQ9PgS",
+            "publicTestApiKey": "pk_live_51Mhcs3ApAW7u42iqxmxp1geErZ1brLZWZi8t2FnSmBNvfHUqK7q8TjXAIuKscUdCmKfcIB0JjGIGvCeCMc0AXaYe00aMhQ9PgS"
         }
     },
     "69d4a5bb-09a3-4f3d-a94e-667c21c057eb": {
