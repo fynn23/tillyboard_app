@@ -11,7 +11,6 @@ import plugin69d4a5bb09a34f3da94e667c21c057eb from '@/components/plugins/plugin-
 import plugin1fa0dd685069436c9a7d3b54c340f1fa from '@/components/plugins/plugin-1fa0dd68-5069-436c-9a7d-3b54c340f1fa/ww-config.js';
 import plugin66a79c9870e74bc4885920776b024ec2 from '@/components/plugins/plugin-66a79c98-70e7-4bc4-8859-20776b024ec2/ww-config.js';
 import plugind66a250d8468469ead33ee028f632398 from '@/components/plugins/plugin-d66a250d-8468-469e-ad33-ee028f632398/ww-config.js';
-import plugin00d22f721a0344f8ad68c593dc80b543 from '@/components/plugins/plugin-00d22f72-1a03-44f8-ad68-c593dc80b543/ww-config.js';
 import plugin3a407b459c63471db09b15cf797e5566 from '@/components/plugins/plugin-3a407b45-9c63-471d-b09b-15cf797e5566/ww-config.js';
 import pluginee24f5ace15e4dddbaa40b4baedf90c9 from '@/components/plugins/plugin-ee24f5ac-e15e-4ddd-baa4-0b4baedf90c9/ww-config.js';
 import plugin2adce8d52056479da21a068f55a8077f from '@/components/plugins/plugin-2adce8d5-2056-479d-a21a-068f55a8077f/ww-config.js';
@@ -96,7 +95,6 @@ export const useComponentBasesStore = defineStore('componentBases', () => {
 'plugin-1fa0dd68-5069-436c-9a7d-3b54c340f1fa': getInheritedConfiguration({ ...plugin1fa0dd685069436c9a7d3b54c340f1fa, name: 'plugin-1fa0dd68-5069-436c-9a7d-3b54c340f1fa' }),
 'plugin-66a79c98-70e7-4bc4-8859-20776b024ec2': getInheritedConfiguration({ ...plugin66a79c9870e74bc4885920776b024ec2, name: 'plugin-66a79c98-70e7-4bc4-8859-20776b024ec2' }),
 'plugin-d66a250d-8468-469e-ad33-ee028f632398': getInheritedConfiguration({ ...plugind66a250d8468469ead33ee028f632398, name: 'plugin-d66a250d-8468-469e-ad33-ee028f632398' }),
-'plugin-00d22f72-1a03-44f8-ad68-c593dc80b543': getInheritedConfiguration({ ...plugin00d22f721a0344f8ad68c593dc80b543, name: 'plugin-00d22f72-1a03-44f8-ad68-c593dc80b543' }),
 'plugin-3a407b45-9c63-471d-b09b-15cf797e5566': getInheritedConfiguration({ ...plugin3a407b459c63471db09b15cf797e5566, name: 'plugin-3a407b45-9c63-471d-b09b-15cf797e5566' }),
 'plugin-ee24f5ac-e15e-4ddd-baa4-0b4baedf90c9': getInheritedConfiguration({ ...pluginee24f5ace15e4dddbaa40b4baedf90c9, name: 'plugin-ee24f5ac-e15e-4ddd-baa4-0b4baedf90c9' }),
 'plugin-2adce8d5-2056-479d-a21a-068f55a8077f': getInheritedConfiguration({ ...plugin2adce8d52056479da21a068f55a8077f, name: 'plugin-2adce8d5-2056-479d-a21a-068f55a8077f' }),

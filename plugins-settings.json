@@ -62,16 +62,6 @@
         "pluginId": "3a407b45-9c63-471d-b09b-15cf797e5566",
         "publicData": {}
     },
-    "00d22f72-1a03-44f8-ad68-c593dc80b543": {
-        "id": "19cc1f99-e3c3-4bea-a1de-8f70572e7709",
-        "name": "Stripe",
-        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
-        "pluginId": "00d22f72-1a03-44f8-ad68-c593dc80b543",
-        "publicData": {
-            "publicApiKey": "pk_live_51Mhcs3ApAW7u42iqxmxp1geErZ1brLZWZi8t2FnSmBNvfHUqK7q8TjXAIuKscUdCmKfcIB0JjGIGvCeCMc0AXaYe00aMhQ9PgS",
-            "publicTestApiKey": "pk_live_51Mhcs3ApAW7u42iqxmxp1geErZ1brLZWZi8t2FnSmBNvfHUqK7q8TjXAIuKscUdCmKfcIB0JjGIGvCeCMc0AXaYe00aMhQ9PgS"
-        }
-    },
     "69d4a5bb-09a3-4f3d-a94e-667c21c057eb": {
         "id": "36364b0d-ff81-40b8-8930-be63876291d7",
         "name": "NPM",
