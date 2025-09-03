@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout `weweb-export` branch
+      - name: Checkout `export` branch
         uses: actions/checkout@v4
         with:
-          ref: weweb-export
-          path: weweb-export
+          ref: export
+          path: export
 
       - name: Checkout `staging` branch
         uses: actions/checkout@v4
@@ -25,7 +25,7 @@ jobs:
       - name: Clear old webapp/ and copy new export
         run: |
           rm -rf staging/webapp/*
-          cp -r weweb-export/* staging/webapp/
+          cp -r export/* staging/webapp/
 
       - name: Commit and push to `staging`
         run: |
@@ -33,5 +33,5 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@users.noreply.github.com"
           git add webapp/
-          git commit -m "🔄 Update webapp/ from weweb-export" || echo "No changes to commit"
+          git commit -m "🔄 Update webapp/ from export" || echo "No changes to commit"
           git push origin staging
