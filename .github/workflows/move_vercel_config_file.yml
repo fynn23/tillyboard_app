@@ -3,7 +3,7 @@ name: Sync WeWeb Export to `staging` Branch in `webapp/`
 on:
   push:
     branches:
-      - weweb-export
+      - export
 
 jobs:
   sync-to-staging:
