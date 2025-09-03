@@ -1,26 +1,37 @@
-name: Move vercel.json to root
+name: Sync WeWeb Export to `staging` Branch in `webapp/`
 
 on:
   push:
     branches:
-      - staging  # Trigger auf Pushes im Staging-Branch
+      - weweb-export
 
 jobs:
-  move-file:
+  sync-to-staging:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
+      - name: Checkout `weweb-export` branch
+        uses: actions/checkout@v4
+        with:
+          ref: weweb-export
+          path: weweb-export
 
-      - name: Move vercel.json to root
-        run: |
-          mv public/vercel.json vercel.json
+      - name: Checkout `staging` branch
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+          path: staging
 
-      - name: Commit changes
+      - name: Clear old webapp/ and copy new export
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'actions@users.noreply.github.com'
-          git add vercel.json
-          git commit -m 'Move vercel.json to root' || echo "No changes to commit"
-          git push origin HEAD:staging
+          rm -rf staging/webapp/*
+          cp -r weweb-export/* staging/webapp/
+
+      - name: Commit and push to `staging`
+        run: |
+          cd staging
+          git config user.name "GitHub Actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add webapp/
+          git commit -m "🔄 Update webapp/ from weweb-export" || echo "No changes to commit"
+          git push origin staging
