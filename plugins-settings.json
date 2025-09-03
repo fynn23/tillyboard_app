@@ -62,29 +62,6 @@
         "pluginId": "3a407b45-9c63-471d-b09b-15cf797e5566",
         "publicData": {}
     },
-    "f9ef41c3-1c53-4857-855b-f2f6a40b7186": {
-        "id": "5026b90e-6ce7-491d-b79f-5dbae5c3a26b",
-        "name": "Supabase",
-        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
-        "pluginId": "f9ef41c3-1c53-4857-855b-f2f6a40b7186",
-        "publicData": {
-            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzcXpod3hvYWtwaXlna2VscmV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY5ODUwODgsImV4cCI6MjAwMjU2MTA4OH0.HmwQQW-WI9_btPDTTmV0gaDWZuSrG3Zay13Bo3IyVws",
-            "projectUrl": "https://gsqzhwxoakpiygkelrev.supabase.co",
-            "realtimeTables": {
-                "review": true,
-                "activity": true,
-                "notes_all": true,
-                "tasks_all": true,
-                "shotlist_all": true,
-                "schedules_all": true,
-                "tasks_columns": true,
-                "member_project": true,
-                "storyboard_all": true,
-                "tasks_comments": true,
-                "equipment_packing": true
-            }
-        }
-    },
     "00d22f72-1a03-44f8-ad68-c593dc80b543": {
         "id": "19cc1f99-e3c3-4bea-a1de-8f70572e7709",
         "name": "Stripe",
@@ -127,6 +104,29 @@
                     "instanceName": ""
                 }
             ]
+        }
+    },
+    "f9ef41c3-1c53-4857-855b-f2f6a40b7186": {
+        "id": "5026b90e-6ce7-491d-b79f-5dbae5c3a26b",
+        "name": "Supabase",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "f9ef41c3-1c53-4857-855b-f2f6a40b7186",
+        "publicData": {
+            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzcXpod3hvYWtwaXlna2VscmV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY5ODUwODgsImV4cCI6MjAwMjU2MTA4OH0.HmwQQW-WI9_btPDTTmV0gaDWZuSrG3Zay13Bo3IyVws",
+            "projectUrl": "https://gsqzhwxoakpiygkelrev.supabase.co",
+            "realtimeTables": {
+                "review": true,
+                "activity": true,
+                "notes_all": true,
+                "tasks_all": true,
+                "shotlist_all": true,
+                "schedules_all": true,
+                "tasks_columns": true,
+                "member_project": true,
+                "storyboard_all": true,
+                "tasks_comments": true,
+                "equipment_packing": true
+            }
         }
     },
     "d66a250d-8468-469e-ad33-ee028f632398": {
