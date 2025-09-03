@@ -1,0 +1,142 @@
+{
+    "cabb43dd-6161-4140-8ebf-03b6fb045a0b": {
+        "id": "ac59167d-373d-4e47-930a-1e977e133119",
+        "name": "Google",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "cabb43dd-6161-4140-8ebf-03b6fb045a0b",
+        "publicData": {}
+    },
+    "2bd1c688-31c5-443e-ae25-59aa5b6431fb": {
+        "id": "b3571463-3015-4f63-a86b-64c52eb2c057",
+        "name": "REST API",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "2bd1c688-31c5-443e-ae25-59aa5b6431fb",
+        "publicData": {}
+    },
+    "8bc1b5c9-29e4-4269-becb-a2e1a8de9127": {
+        "id": "77e0c1cb-b666-4ade-843e-d2282217a434",
+        "name": "WeWeb Email",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "8bc1b5c9-29e4-4269-becb-a2e1a8de9127",
+        "publicData": {}
+    },
+    "832d6f7a-42c3-43f1-a3ce-9a678272f811": {
+        "id": "8ac824e2-1c89-43f4-8d1f-114dfd52494b",
+        "name": "Date",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "832d6f7a-42c3-43f1-a3ce-9a678272f811",
+        "publicData": {}
+    },
+    "2adce8d5-2056-479d-a21a-068f55a8077f": {
+        "id": "7c596c29-0e14-4d81-9692-d94fe58c9f96",
+        "name": "Mapbox",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "2adce8d5-2056-479d-a21a-068f55a8077f",
+        "publicData": {}
+    },
+    "ee24f5ac-e15e-4ddd-baa4-0b4baedf90c9": {
+        "id": "3459a1da-bc5b-4a84-96ef-abe1bcf2c8d4",
+        "name": "CSV",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "ee24f5ac-e15e-4ddd-baa4-0b4baedf90c9",
+        "publicData": {}
+    },
+    "9c40819b-4a8f-468f-9ba5-4b9699f3361f": {
+        "id": "b495f6b0-a07f-4c47-ac07-583650bedc06",
+        "name": "Charts",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "9c40819b-4a8f-468f-9ba5-4b9699f3361f",
+        "publicData": {}
+    },
+    "66a79c98-70e7-4bc4-8859-20776b024ec2": {
+        "id": "a68897e8-0942-4db4-8582-3e0f22b6a39f",
+        "name": "PWA",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "66a79c98-70e7-4bc4-8859-20776b024ec2",
+        "publicData": {}
+    },
+    "3a407b45-9c63-471d-b09b-15cf797e5566": {
+        "id": "ce7afd92-cd36-4965-bf26-2d064b4e3669",
+        "name": "Sound",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "3a407b45-9c63-471d-b09b-15cf797e5566",
+        "publicData": {}
+    },
+    "69d4a5bb-09a3-4f3d-a94e-667c21c057eb": {
+        "id": "36364b0d-ff81-40b8-8930-be63876291d7",
+        "name": "NPM",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "69d4a5bb-09a3-4f3d-a94e-667c21c057eb",
+        "publicData": {
+            "packages": [
+                {
+                    "link": "https://github.com/kazuhikoarase/qrcode-generator#readme",
+                    "name": "qrcode-generator",
+                    "version": "1.4.4",
+                    "instanceName": ""
+                },
+                {
+                    "link": "https://github.com/mebjas/html5-qrcode#readme",
+                    "name": "html5-qrcode",
+                    "version": "2.2.1",
+                    "instanceName": "html5-qrcode"
+                },
+                {
+                    "link": "https://fengyuanchen.github.io/compressorjs",
+                    "name": "compressorjs",
+                    "version": "1.2.1",
+                    "instanceName": ""
+                },
+                {
+                    "link": "https://github.com/tus/tus-js-client",
+                    "name": "tus-js-client",
+                    "version": "4.1.0",
+                    "instanceName": ""
+                }
+            ]
+        }
+    },
+    "f9ef41c3-1c53-4857-855b-f2f6a40b7186": {
+        "id": "5026b90e-6ce7-491d-b79f-5dbae5c3a26b",
+        "name": "Supabase",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "f9ef41c3-1c53-4857-855b-f2f6a40b7186",
+        "publicData": {
+            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzcXpod3hvYWtwaXlna2VscmV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY5ODUwODgsImV4cCI6MjAwMjU2MTA4OH0.HmwQQW-WI9_btPDTTmV0gaDWZuSrG3Zay13Bo3IyVws",
+            "projectUrl": "https://gsqzhwxoakpiygkelrev.supabase.co",
+            "realtimeTables": {
+                "review": true,
+                "activity": true,
+                "notes_all": true,
+                "tasks_all": true,
+                "shotlist_all": true,
+                "schedules_all": true,
+                "tasks_columns": true,
+                "member_project": true,
+                "storyboard_all": true,
+                "tasks_comments": true,
+                "equipment_packing": true
+            }
+        }
+    },
+    "d66a250d-8468-469e-ad33-ee028f632398": {
+        "id": "5ac889cf-3d66-45c2-a95c-a1a9b35705f0",
+        "name": "OpenAI",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "d66a250d-8468-469e-ad33-ee028f632398",
+        "publicData": {}
+    },
+    "1fa0dd68-5069-436c-9a7d-3b54c340f1fa": {
+        "id": "d74144ca-3eff-4804-a5ec-020e5880a63a",
+        "name": "Supabase Auth",
+        "designId": "3a86b10b-16f7-4efc-9a0c-eee5ec05e43b",
+        "pluginId": "1fa0dd68-5069-436c-9a7d-3b54c340f1fa",
+        "publicData": {
+            "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzcXpod3hvYWtwaXlna2VscmV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODY5ODUwODgsImV4cCI6MjAwMjU2MTA4OH0.HmwQQW-WI9_btPDTTmV0gaDWZuSrG3Zay13Bo3IyVws",
+            "roleTable": "role",
+            "projectUrl": "https://gsqzhwxoakpiygkelrev.supabase.co",
+            "userRoleTable": "user_role",
+            "afterNotSignInPageId": "1c66d562-0a00-4994-91e8-52894a54913f"
+        }
+    }
+}
