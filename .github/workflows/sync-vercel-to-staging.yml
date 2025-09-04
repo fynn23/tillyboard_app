@@ -1,0 +1,52 @@
+name: Copy vercel.json → staging (manual)
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  copy-vercel-json:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout main (nur zum Lesen der vercel.json)
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+          fetch-depth: 0
+
+      # Checkout staging (Ziel-Branch, in den wir schreiben)
+      - name: Checkout staging
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+          path: staging
+          fetch-depth: 0
+
+      # Kopiere NUR die vercel.json von main → staging
+      - name: Copy vercel.json
+        run: |
+          set -e
+          if [ ! -f main/vercel.json ]; then
+            echo "FATAL: main/vercel.json nicht gefunden."
+            exit 1
+          fi
+          cp -f main/vercel.json staging/vercel.json
+
+      # Commit & Push NUR wenn vercel.json sich geändert hat
+      - name: Commit & push (staging)
+        working-directory: staging
+        run: |
+          set -e
+          if [ -n "$(git status --porcelain vercel.json)" ]; then
+            git config user.name "github-actions"
+            git config user.email "actions@users.noreply.github.com"
+            git add vercel.json
+            git commit -m "chore: sync vercel.json from main"
+            git push origin HEAD:staging
+          else
+            echo "Keine Änderung an vercel.json – nichts zu tun."
+          fi
