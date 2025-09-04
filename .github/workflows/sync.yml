@@ -1,0 +1,29 @@
+name: Sync and Deploy to Production
+
+on:
+  push:
+    branches:
+      - staging # Der Workflow wird ausgelöst, wenn WeWeb in den 'staging'-Branch pusht
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Staging Branch
+        uses: actions/checkout@v2
+        with:
+          ref: 'staging'
+
+      - name: Fetch and get vercel.json from vercel branch
+        run: |
+          git fetch origin vercel
+          git checkout vercel -- vercel.json
+          git status
+
+      - name: Commit and Push to Production
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add vercel.json
+          git commit -m "Auto-sync from staging and add vercel.json" || echo "No changes to commit"
+          git push origin production
