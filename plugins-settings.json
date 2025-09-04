@@ -136,6 +136,7 @@
             "roleTable": "role",
             "projectUrl": "https://gsqzhwxoakpiygkelrev.supabase.co",
             "userRoleTable": "user_role",
+            "afterForbiddenPageId": "1c66d562-0a00-4994-91e8-52894a54913f",
             "afterNotSignInPageId": "1c66d562-0a00-4994-91e8-52894a54913f"
         }
     }
