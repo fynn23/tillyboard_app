@@ -1,13 +1,17 @@
 {
-  "rewrites": [
+  "redirects": [
     {
       "source": "/en/(.*)",
-      "destination": "/$1"
+      "destination": "/$1",
+      "permanent": true
     },
     {
       "source": "/de/(.*)",
-      "destination": "/$1"
-    },
+      "destination": "/$1",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/index.html"
