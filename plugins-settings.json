@@ -70,12 +70,6 @@
         "publicData": {
             "packages": [
                 {
-                    "link": "https://github.com/kazuhikoarase/qrcode-generator#readme",
-                    "name": "qrcode-generator",
-                    "version": "1.4.4",
-                    "instanceName": ""
-                },
-                {
                     "link": "https://github.com/mebjas/html5-qrcode#readme",
                     "name": "html5-qrcode",
                     "version": "2.2.1",
@@ -92,6 +86,12 @@
                     "name": "tus-js-client",
                     "version": "4.1.0",
                     "instanceName": ""
+                },
+                {
+                    "link": "https://github.com/kazuhikoarase/qrcode-generator#readme",
+                    "name": "qrcode-generator",
+                    "version": "1.4.4",
+                    "instanceName": "qr_code"
                 }
             ]
         }
